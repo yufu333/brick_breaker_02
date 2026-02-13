@@ -15,7 +15,8 @@ BLOCK_H = 20 # ブロックの高さ
 COLS = 400 // BLOCK_W # ブロックの列数
 ROWS = 8 # ブロックの行数
 BLOCK_COLORS = [  #ブロックの色
-    "white", "red", "orange", "magenta", "pink", "cyan", "lime", "green", "blue"]
+    "#FFFFFF", "#286399", "#2C6FAB", "#3077B8",
+    "#3483C9", "#378BD6", "#3B95E6", "#3F9DF2", "#42A6FF"]
 
 # グローバル変数の宣言
 info = document.getElementById("info") # 情報表示用の要素を取得
@@ -143,10 +144,10 @@ def draw_screen():
             context.fillStyle = BLOCK_COLORS[blocks[y][x]]
             context.fillRect(x * BLOCK_W, y * BLOCK_H, BLOCK_W - 2, BLOCK_H - 2)
     # プレイヤーのバーの描画
-    context.fillStyle = "black" # プレイヤーのバーの色
+    context.fillStyle = "#011254" # プレイヤーのバーの色
     context.fillRect(game["px"], PLAYER_Y, PLAYER_W, 10) # バーを描画
     # ボールの描画
-    context.fillStyle = "red" # ボールの色
+    context.fillStyle = "#BD1433" # ボールの色
     context.beginPath() # 新しいパスを開始
     context.arc(game["ball_x"], game["ball_y"], BALL_SIZE // 2, 0, 2 * math.pi) # 円を描く
     context.fill() # 円を塗りつぶす
