@@ -81,7 +81,7 @@ def init_game():
         "game_over": False, # ゲームオーバー状態
     })
     info.innerText = "ブロック崩し"
-    draw_screen()
+    # draw_screen()
  
 def game_loop():
 
