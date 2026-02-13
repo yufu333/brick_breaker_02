@@ -18,14 +18,22 @@ BLOCK_COLORS = [  #ブロックの色
     "#FFFFFF", "#286399", "#2C6FAB", "#3077B8",
     "#3483C9", "#378BD6", "#3B95E6", "#3F9DF2", "#42A6FF"]
 
+
 # グローバル変数の宣言
 info = document.getElementById("info") # 情報表示用の要素を取得
 canvas = document.getElementById("canvas") # Canvas要素を取得
 context = canvas.getContext("2d") # 2D描画コンテキストを取得
+start_button = document.getElementById("start_button")
+
 blocks = [] # ブロックのリスト
 game = {"game_over":True} # ゲームの状態を管理する辞書
 mouse_active = False  # Canvas内にマウスがある間だけ True
-loop_proxy = None
+
+mouse_enter_proxy = None
+mouse_leave_proxy = None
+mouse_move_proxy  = None
+key_down_proxy    = None
+loop_proxy        = None
 
 
 def init_game():
@@ -64,6 +72,7 @@ def game_loop():
     # ゲームオーバーでなければ次のループをセット
     if not game["game_over"]:
         setTimeout(loop_proxy, INTERVAL)
+
 
 def update_ball():
     global dx,dy
@@ -161,18 +170,13 @@ def draw_screen():
 # -----------  コントロール　-------------
 def start_button_on_click(event):
     """スタートボタンがクリックされたときの処理"""
+    global loop_proxy
     # スタートボタンの無効化
     document.getElementById("start_button").disabled = True
     init_game() # ゲーム初期化
     if loop_proxy is None:
         loop_proxy = create_proxy(game_loop)
     game_loop() # ゲームループ開始
-
-def start_button_on_click(event):
-    """スタートボタンがクリックされたときの処理"""
-    document.getElementById("start_button").disabled = True
-    init_game()
-    game_loop()
 
 def set_player_x_from_mouse(client_x):
     """マウスのX座標(clientX)からバー位置(px)を計算して反映（水平のみ）"""
@@ -231,5 +235,24 @@ def key_down(event):
     elif event.key == "ArrowLeft":
         player_move(-1 * PLAYER_MOVE)  # 左に移動
 
-# キー押下イベントリスナーの登録
-document.addEventListener("keydown", key_down)
+# リスナー登録（★create_proxyで包んで保持）
+def setup_listeners():
+    global start_click_proxy, mouse_enter_proxy, mouse_leave_proxy, mouse_move_proxy, key_down_proxy
+
+    start_click_proxy = create_proxy(start_button_on_click)
+    mouse_enter_proxy = create_proxy(on_mouse_enter)
+    mouse_leave_proxy = create_proxy(on_mouse_leave)
+    mouse_move_proxy = create_proxy(on_mouse_move)
+    key_down_proxy = create_proxy(key_down)
+
+    start_button.addEventListener("click", start_click_proxy)
+
+    canvas.addEventListener("mouseenter", mouse_enter_proxy)
+    canvas.addEventListener("mouseleave", mouse_leave_proxy)
+    canvas.addEventListener("mousemove", mouse_move_proxy)
+
+    document.addEventListener("keydown", key_down_proxy)
+
+# 起動時に1回だけ
+setup_listeners()
+draw_screen()
