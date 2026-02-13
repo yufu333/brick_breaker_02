@@ -273,6 +273,6 @@ def setup_listeners():
     document.addEventListener("keydown", key_down_proxy)
 
 # 起動時に1回だけ
-init_board_empty()
+# init_board_empty()
 setup_listeners()
 draw_screen()
