@@ -275,4 +275,4 @@ def setup_listeners():
 # 起動時に1回だけ
 # init_board_empty()
 setup_listeners()
-draw_screen()
+# draw_screen()
