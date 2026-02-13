@@ -223,11 +223,6 @@ def on_mouse_move(event):
         return
     set_player_x_from_mouse(event.clientX)
 
-# --- マウスイベント登録（Canvasを“領域”にする） ---
-canvas.addEventListener("mouseenter", on_mouse_enter)
-canvas.addEventListener("mouseleave", on_mouse_leave)
-canvas.addEventListener("mousemove", on_mouse_move)
-
 def player_move(dx):
     """プレイヤーのバーを移動する"""
     if game["game_over"]:
