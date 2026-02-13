@@ -260,3 +260,7 @@ def setup_listeners():
 
 # 起動時に1回
 setup_listeners()
+# ★準備完了したらボタンを有効化
+start_button.disabled = False
+start_button.innerText = "ゲームスタート"
+info.innerText = "準備完了：スタートを押してください"
