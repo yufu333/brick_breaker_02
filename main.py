@@ -25,6 +25,7 @@ context = canvas.getContext("2d") # 2D描画コンテキストを取得
 blocks = [] # ブロックのリスト
 game = {"game_over":True} # ゲームの状態を管理する辞書
 mouse_active = False  # Canvas内にマウスがある間だけ True
+loop_proxy = None
 
 
 def init_game():
@@ -62,7 +63,7 @@ def game_loop():
     draw_screen() # 画面の更新
     # ゲームオーバーでなければ次のループをセット
     if not game["game_over"]:
-        setTimeout(create_proxy(game_loop), INTERVAL)
+        setTimeout(loop_proxy, INTERVAL)
 
 def update_ball():
     global dx,dy
@@ -163,6 +164,8 @@ def start_button_on_click(event):
     # スタートボタンの無効化
     document.getElementById("start_button").disabled = True
     init_game() # ゲーム初期化
+    if loop_proxy is None:
+        loop_proxy = create_proxy(game_loop)
     game_loop() # ゲームループ開始
 
 def start_button_on_click(event):
