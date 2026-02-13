@@ -44,14 +44,6 @@ mouse_move_proxy  = None
 key_down_proxy    = None
 loop_proxy        = None
 
-def cols():
-    """canvas幅から列数を計算（サイズ変更にも強い）"""
-    return int(canvas.width // BLOCK_W)
-
-def init_board_empty():
-    """起動直後でも描画できるように 0埋め盤面を作る"""
-    global blocks
-    blocks = [[0] * cols() for _ in range(ROWS)]
 
 def init_game():
     """ゲームの初期化"""
@@ -81,8 +73,7 @@ def init_game():
         "game_over": False, # ゲームオーバー状態
     })
     info.innerText = "ブロック崩し"
-    # draw_screen()
- 
+    
 def game_loop():
 
     """ゲームのメインループ"""
@@ -272,7 +263,5 @@ def setup_listeners():
 
     document.addEventListener("keydown", key_down_proxy)
 
-# 起動時に1回だけ
-# init_board_empty()
+# 起動時に1回
 setup_listeners()
-# draw_screen()
